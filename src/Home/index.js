@@ -3,7 +3,7 @@ import Quotes from '../firebase/quotes';
 import database from '../firebase/firebase';
 import { Button, Card, Image } from 'semantic-ui-react';
 import '../App.css';
-import NavBar from '../Nav';
+// import NavBar from '../Nav';
 
 
 //where the quotes and actions are render
@@ -38,7 +38,7 @@ untoNext = (e) => {
 	render(){
 		return(
 			<div>
-			<NavBar />
+			
 			<div class="ui cards">
 			  <div class="ui card">
 			    <div class="content">

@@ -10,7 +10,6 @@ const NavBar = (props) => {
     <Nav>
           <NavLink className="nav-text" href="/home">Home</NavLink>
           <NavLink className="nav-text" href="/profile">Profile</NavLink>
-          <NavLink className="nav-text" href="/" onClick={props.logout}>Logout</NavLink> 
     </Nav>
   )
 }

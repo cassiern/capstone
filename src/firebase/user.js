@@ -2,33 +2,42 @@ import React, {Component} from 'react';
 import database from './firebase';
 
 class User extends Component{
-
+	constructor(props){
+		super(props);
+	}
 
 	componentDidMount(){
 		const users = []
 		database.ref('users').set({
-			user1: {
-				name: "Cassie Nichols",
-				age: 22,
-				place: 'denver'
-			},
-			user2: {
-				name: 'Butch Cassidy',
-				age: 'old',
-				place: 'Middle of nowhere'
-			},
+			user: {
+				id: 'this.props.userId',
+				displayName: 'this.props.username',
+				accepts: 'this.props.accepts',
+				// completed: this.props.completed
+			}
 		})
-		.then(()=> {
-			console.log('Data Written Successfully')
+
+
+
+const userInDataBase = [];
+	database.ref('users').on('value', (snapshot) => {
+
+			snapshot.forEach((childSnapShot) => {
+				userInDataBase.push({
+					id: childSnapShot.key,
+					...childSnapShot.val()
+				})
+			})
+		console.log(userInDataBase, '<-- userInDataBase')
+
+	 	// this.props.fetchingUser(userInDataBase)
 		})
-		.catch((error) => {console.log('Firebase error', error)
-	})
-	}
+
+}
 
 	render(){
 		return(
 			<div>
-			FireBase in Users is working
 			</div>
 			)
 	}
@@ -36,18 +45,4 @@ class User extends Component{
 
 
 export default User;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

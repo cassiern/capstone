@@ -1,9 +1,8 @@
-import firebase from 'firebase/app';
+import firebase from 'firebase';
 import 'firebase/database';
 
 
-
-import firebaseui from 'firebaseui';
+// import firebaseui from 'firebaseui';
 
 // from firebase...
 // var firebase = require('firebase');
@@ -27,7 +26,18 @@ import firebaseui from 'firebaseui';
 // Initialize Firebase
 
 firebase.initializeApp(firebaseConfig);
-
 const database = firebase.database();
 
+//exports google auth for in in
+export const provider = new firebase.auth.GoogleAuthProvider();
+//exports auth module form firebase
+export const auth = firebase.auth();
 export default database
+
+
+
+
+
+
+
+

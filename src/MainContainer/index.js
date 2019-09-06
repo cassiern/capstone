@@ -23,16 +23,15 @@ class MainContainer extends Component{
 		super();
 		this.state = {
 			isLogged: false,
-			username: '',
 			quoteOTDay: '',
 			actionOTDay: '',
 			allActions: [],
 			counter: 0,
-			currentUser: {
-				accept: 0,
-				decline: 0	
-			},
-			canClick: true
+			accept: 0,
+			decline: 0,
+			canClick: true,
+			username: '',
+			user: {},
 		}
 	}
 
@@ -57,6 +56,22 @@ if(this.state.canClick && this.state.counter < 2){
 	}
 
 }
+//function for every 24 hours new quote
+
+componentDidMount(){
+	this.settingUser();
+}
+
+
+settingUser = (props) => {
+	this.setState({
+	username: this.props.user.displayName
+})
+	console.log(this.props.user.displayName, '<-- user in MainContainer state')
+}
+
+
+
 canClick = () => {
 	if(this.state.counter === 2){
 		this.setState({
@@ -66,11 +81,6 @@ canClick = () => {
 		prompt('Sorry, you reached your limit of declines for today.')
 	}
 }
-
-
-
-
-
 fetchNextAction = () => {
 if(this.state.canClick && this.state.counter < 2){
 	let i = this.state.counter +1;
@@ -86,53 +96,39 @@ if(this.state.canClick && this.state.counter < 2){
 	}else {
 	this.canClick();
 }
-
 }
+// erase action from db once shown
 
-// get randoms isn't fully working....
-// need for it to stop at each one and set the state.
-// then to wait until button is clicked to go on to the 
-// next index for actions only
-
-
-//clicks on decline and triggers fetchingAction
-// i = 0 
 fetchingAction = (updatedActions) => {
-	// for(let i =0; i < updatedActions.length; i++){
 
 	this.setState({
 		allActions: updatedActions,
 		actionOTDay: updatedActions[this.state.counter].action
-	})	
+	}) 	
 
 	console.log(updatedActions, '<-- updatedActions in fetch route')		
-		// if(i === updatedActions.length){
-		// 	i = 0;
-		// 	this.fetchingAction();
-		// }
-	// }
 }
 acceptCounter = () => {
 	this.setState({
-		currentUser: {
-			accept: this.state.currentUser.accept + 1
-		}
+
+			accept: this.state.accept + 1
+	})
+}
+fetchingUser = (userInDataBase) => {
+	this.setState({
+		user: userInDataBase
 	})
 }
 
 	render(){
 		console.log(this.state.quoteOTDay, '<-- quoteOTDay in state')
 		console.log(this.state.actionOTDay, '<-- actionOTDay in state')
-		console.log(this.state.currentUser.accept, '<-- accept in state')
+		console.log(this.state.accept, '<-- accept in state')
 		return(
 			<main>
-			<Register />
-				<Actions fetchingAction={this.fetchingAction}/>
-				<Quotes fetchingQuote={this.fetchingQuote}/>
-				
-
+			<User accepts={this.state.accept} userId={this.props.user.uid} username={this.state.username} fetchingUser={this.fetchingUser}/>
 				<Switch>
-					<Route exact path='/profile' render={(props) => <Profile accept={this.state.currentUser.accept}/> } />
+					<Route exact path='/profile' render={(props) => <Profile accept={this.state.accept} username={this.state.username} image={this.props.image} /> } />
 					<Route exact path='/home' render={(props) => <Home quoteOTDay={this.state.quoteOTDay} actionOTDay={this.state.actionOTDay} fetchNextAction={this.fetchNextAction} accept={this.acceptCounter}/>}/>
 					<Route component={My404} />
 				</Switch>
