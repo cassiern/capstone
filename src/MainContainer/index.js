@@ -5,7 +5,7 @@ import Actions from '../firebase/actions';
 import Home from '../Home';
 import Quotes from '../firebase/quotes';
 import { Route, Switch } from 'react-router-dom';
-
+import Register from '../firebase-regi';
 
 const My404 = () => {
   return (
@@ -126,6 +126,7 @@ acceptCounter = () => {
 		console.log(this.state.currentUser.accept, '<-- accept in state')
 		return(
 			<main>
+			<Register />
 				<Actions fetchingAction={this.fetchingAction}/>
 				<Quotes fetchingQuote={this.fetchingQuote}/>
 				
