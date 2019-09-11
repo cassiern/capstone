@@ -4,18 +4,18 @@ import User from '../firebase/user';
 import Actions from '../firebase/actions';
 import Home from '../Home';
 import Quotes from '../firebase/quotes';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Register from '../firebase-regi';
+import NavBar from '../Nav';
+
 
 const My404 = () => {
   return (
     <div>
-      Looks like your lost!
+      Looks like you're lost!
     </div>
   )
 }
-
-
 
 //put all logic in here
 class MainContainer extends Component{
@@ -26,8 +26,11 @@ class MainContainer extends Component{
 			quoteOTDay: '',
 			actionOTDay: '',
 			allActions: [],
+			allQuotes: [],
 			counter: 0,
+			quotesCounter: 0,
 			accept: 0,
+			acceptedAction: '',
 			decline: 0,
 			canClick: true,
 			username: '',
@@ -37,25 +40,48 @@ class MainContainer extends Component{
 
 
 fetchingQuote = (updatedQuotes) => {
-if(this.state.canClick && this.state.counter < 2){
+		console.log(updatedQuotes, '<-- updatedQuotes')
+
+// if(this.state.canClick && this.state.counter < 2){
 
 	for(let i = 0; i < updatedQuotes.length; i++){
 
 	this.setState({
-		quoteOTDay: updatedQuotes[i].quote
+		allQuotes: updatedQuotes,
+		quoteOTDay: updatedQuotes[this.state.quotesCounter].quote
 	});
 	// console.log(i, '<-- index # for quotes')
 	// console.log(updatedQuotes, '<-- updated quotes in fetch route')
 		// if(i === updatedQuotes.length){
 		// 	i = 0;
 		// 	this.fetchingQuote();
-		// }
-	} 
-}else{
-		this.canClick();
-	}
-
+		// }	 
 }
+}
+// fetchingAction = (updatedActions) => {
+
+// 	this.setState({
+// 		allActions: updatedActions,
+// 		actionOTDay: updatedActions[this.state.counter].action
+// 	}) 	
+
+// 	console.log(updatedActions, '<-- updatedActions in fetch route')		
+// }
+fetchingNextQuote = (e) => {
+	let i = this.state.quotesCounter +1;
+	let newIndex = (i+1) == this.state.allQuotes.length ? 0 : i++;
+		this.setState({
+			quoteOTDay: this.state.allQuotes[i].quote,
+			quotesCounter: newIndex
+		},
+		() => {
+			console.log(this.state.quotesCounter, '<--this.state.quotesCounter')
+		}
+		)
+}
+
+
+
 //function for every 24 hours new quote
 
 componentDidMount(){
@@ -82,7 +108,9 @@ canClick = () => {
 	}
 }
 fetchNextAction = () => {
-if(this.state.canClick && this.state.counter < 2){
+
+if(this.state.canClick){
+
 	let i = this.state.counter +1;
 	let newIndex = (i+1) == this.state.allActions.length ? 0 : i++;
 		this.setState({
@@ -93,14 +121,16 @@ if(this.state.canClick && this.state.counter < 2){
 			console.log(this.state.counter, '<--this.state.counter')
 		}
 		)
+
 	}else {
 	this.canClick();
+
 }
 }
-// erase action from db once shown
 
 fetchingAction = (updatedActions) => {
-
+	console.log(updatedActions, '<-- UPDATED ACTIONS IN FETCH')
+	console.log(typeof(updatedActions), '<-- THE THING')
 	this.setState({
 		allActions: updatedActions,
 		actionOTDay: updatedActions[this.state.counter].action
@@ -110,15 +140,11 @@ fetchingAction = (updatedActions) => {
 }
 acceptCounter = () => {
 	this.setState({
+			accept: this.state.accept + 1,
+	})
+}
 
-			accept: this.state.accept + 1
-	})
-}
-fetchingUser = (userInDataBase) => {
-	this.setState({
-		user: userInDataBase
-	})
-}
+
 
 	render(){
 		console.log(this.state.quoteOTDay, '<-- quoteOTDay in state')
@@ -126,12 +152,15 @@ fetchingUser = (userInDataBase) => {
 		console.log(this.state.accept, '<-- accept in state')
 		return(
 			<main>
-			<User accepts={this.state.accept} userId={this.props.user.uid} username={this.state.username} fetchingUser={this.fetchingUser}/>
+			<Quotes fetchingQuote={this.fetchingQuote}/>
+			<Actions fetchingAction={this.fetchingAction} />
 				<Switch>
-					<Route exact path='/profile' render={(props) => <Profile accept={this.state.accept} username={this.state.username} image={this.props.image} /> } />
-					<Route exact path='/home' render={(props) => <Home quoteOTDay={this.state.quoteOTDay} actionOTDay={this.state.actionOTDay} fetchNextAction={this.fetchNextAction} accept={this.acceptCounter}/>}/>
+					<Route exact path='/' render={() => <Redirect to="/home"/>}/>
+					<Route exact path='/profile' render={(props) => <Profile accept={this.state.accept} username={this.state.username} quoteOTDay={this.state.quoteOTDay} actionOTDay={this.state.actionOTDay} /> } />
+					<Route exact path='/home' render={(props) => <Home quoteOTDay={this.state.quoteOTDay} actionOTDay={this.state.actionOTDay} fetchNextAction={this.fetchNextAction} image={this.props.image} accept={this.acceptCounter} parentAccepts={this.state.accept} fetchingNextQuote={this.fetchingNextQuote}/>}/>
 					<Route component={My404} />
 				</Switch>
+			<User accepts={this.state.accept} userId={this.props.user.uid} username={this.state.username} fetchingUser={this.fetchingUser}/>
 
 			</main>
 			)

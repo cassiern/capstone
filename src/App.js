@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import database, {auth, provider} from './firebase/firebase';
+import firebase from 'firebase';
 import logo from './logo.svg';
 import './App.css';
 import MainContainer from './MainContainer';
 import Profile from './Profile';
-// import Nav from './Nav';
-
+import NavBar from './Nav';
+import { Route, Switch } from 'react-router-dom';
+import 'semantic-ui-css/semantic.min.css';
 
 class App extends Component {
   constructor() {
     super();
     this.state= {
     	displayName: '',
-
     	user: null,
 
     }
@@ -60,25 +61,29 @@ logout() {
 
 //deleting a user logic
 deleteUser = (e) => {
+	const user = firebase.auth().currentUser.delete()
+	.then(function() {
+	  console.log('User deleted.')
+	}).catch(function(error) {
+		return error
+	  console.log('An error happened.')
+	});
 
+	this.logout();
 }
 
 render(){
   return(
   	<div className="App">
-
     <header>
     	<div className="wrapper">
-    		<h1 className="logoName">M = M</h1>
+    		
 			    {this.state.user ?
 			    	<div className="navBar">
-			    	<button onClick={this.logout} className="logout">Logout</button>
-			    	<a href="/profile">Profile</a>
-			    	<a href="/home">Home</a>
+			    	<NavBar logout={this.logout} image={this.state.user.photoURL} deleteUser={this.deleteUser}/>		    	
 			    	</div>
 			    	:
-			    	<button onClick={this.login}>Log In</button>
-			    
+			    	<NavBar login={this.login}/>		    
 			    }    		   		
     	</div>
     </header>
@@ -86,12 +91,13 @@ render(){
     {this.state.user? 
     	<div>
 	    	<div className="maincontainer">
-	    		<MainContainer user={this.state.user} image={this.state.user.photoURL}/>
+	    		<MainContainer user={this.state.user} />
 	    	</div>
     	</div>
     	:
     	<div className="wrapper">
     		<p>You must be logged in to access the App. Sign in with your Google account!</p>
+
     	</div>
     }
 	</div>
@@ -99,7 +105,3 @@ render(){
 }
 }
 export default App;
-
-	    	// <form>
-	    	// 	<input type="text" name="username" placeholder="Username" value={this.state.user.displayName || this.state.user.email} />
-	    	// </form>

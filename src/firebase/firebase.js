@@ -1,5 +1,6 @@
-import firebase from 'firebase';
+import firebase, {child} from 'firebase';
 import 'firebase/database';
+
 
 
 // import firebaseui from 'firebaseui';
@@ -27,11 +28,18 @@ import 'firebase/database';
 
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
+const myFirebase = firebase.database().ref();
 
+// const newAction = myFirebase.child('actions')
+// newAction.push({
+//   action: 'here is a new action'
+// })
+
+export const auth = firebase.auth();
 //exports google auth for in in
 export const provider = new firebase.auth.GoogleAuthProvider();
 //exports auth module form firebase
-export const auth = firebase.auth();
+
 export default database
 
 
