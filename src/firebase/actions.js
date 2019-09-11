@@ -1,12 +1,24 @@
 import React, {Component} from 'react';
+import firebase, {child} from 'firebase';
 import database from './firebase';
 
 class Actions extends Component{
+	constructor(){
+		super();
+		this.state = {
+			addAction: '',
+			actionAdd: true,
+			canEditAction: true,
+			editedAction: '',
+			actionKey: ''
+
+		}
+	}
 	componentDidMount(){
-		const actions = []
+		// const actions = []
 		database.ref('actions').set({
-			action1: {
-				id: 1,
+			action32: {
+				id: 32,
 				action: 'Skip at your workplace for at least 30 seconds.'
 			},
 			action2: {
@@ -49,8 +61,8 @@ class Actions extends Component{
 				id: 11,
 				action: 'Leave someone a hidden note telling them how much you appreciate them.'
 			},
-			action12: {
-				id: 12,
+			action16: {
+				id: 16,
 				action: 'Visit/call an elderly family member.'
 			},
 			action13: {
@@ -59,14 +71,14 @@ class Actions extends Component{
 			},
 			action14: {
 				id: 14,
-				action: 'Take a few minutes to create a running note of gift ideas for ppl from your day-to-day conversations, whether for birthdays or holidays. It doesn’t matter how big or small the item it is. Jot down whatever and whoever comes to mind.'
+				action: 'Take a few minutes to create a running note of gift ideas for people from your day-to-day conversations, whether for birthdays or holidays. It doesn’t matter how big or small the item it is. Jot down whatever and whoever comes to mind.'
 			},
-			action15: {
-				id: 15,
+			action31: {
+				id: 31,
 				action: 'Take ten minutes to set a short term goal that you can accomplish for today.'
 			},
-			action16: {
-				id: 16,
+			action12: {
+				id: 12,
 				action: 'Find time to do a 10-30 minute workout. If the former President Obama had time to do it during his presidency, so do you!'
 			},
 			action17: {
@@ -75,7 +87,7 @@ class Actions extends Component{
 			},
 			action18: {
 				id: 18,
-				action: 'Set a timer for 5 minutes to not think about your day. Think about things your grateful for, your family, anything other than what needs to be done today.'
+				action: 'Set a timer for 5 minutes to not think about your day. Think about things your grateful for, or anything other than what needs to be done today.'
 			},
 			action19: {
 				id: 19,
@@ -107,7 +119,7 @@ class Actions extends Component{
 			},
 			action26: {
 				id: 26,
-				action: 'Paint a picture on canvas, and have it hang up for a least a week in your home.'
+				action: 'Paint a picture on canvas. Have it hang up for a least a week in your home.'
 			},
 			action27: {
 				id: 27,
@@ -115,7 +127,7 @@ class Actions extends Component{
 			},
 			action28: {
 				id: 28,
-				action: 'Clean up a space. Could as much as the whole house, or as little as a desk.'
+				action: 'Clean up a space. Could be as much as the whole house, or as little as a desk.'
 			},
 			action29: {
 				id: 29,
@@ -124,34 +136,144 @@ class Actions extends Component{
 			action30: {
 				id: 30,
 				action: 'List 50, yes 50, things that you are grateful for.'
+			},
+			action15: {
+				id: 15,
+				action: 'Feel like a kid again! Find a playground and swing on the swings.'
+			},
+			action1: {
+				id: 1,
+				action: 'Think of an area that you are not confident in. Instead of avoiding it, give 30 minutes to research/learn something about it. Growth happens when we push past what is comfortable.'
+			},
+			action33: {
+				id: 33,
+				action: 'If you can, buy yourself a treat today. Leave a 40% or more tip. The more generous you are, the more abundant you will feel.'
+			},
+			action34: {
+				id: 34,
+				action: 'Create a mission statement for your life. Declare it out loud every morning. If you are stuck, think about who you are, what you want, and where you are heading.'
+			},
+			action35: {
+				id: 35,
+				action: 'Buy into positivity versus negativity. Blindly buy into positivity. Positivity leads to offense and results. It is the macro of it all. I think it is a black and white game. You are either positive or you are not. - Gary Vaynerchuk'
+			},
+			action36: {
+				id: 36,
+				action: 'Take some time to think of a creative way to earn another income. A way to make money...while you are sleeping so to speak.'
 			}
-
 		})
 
-const updatedActions = [];
-	database.ref('actions').on('value', (snapshot) => {
+
+
+
+
+		// const addedActions = firebase.database().ref('actions');
+		// console.log(addedActions, '<-- added actions')
+		
+
+		const updatedActions = [];
+		database.ref('actions').on('value', (snapshot) => {
 			console.log(typeof snapshot, '<-- snapshot type')
 
 			snapshot.forEach((childSnapShot) => {
 				updatedActions.push({
-					id: childSnapShot.key,
+					key: childSnapShot.key,
 					...childSnapShot.val()
 				})
 			})
 		})
-	console.log(updatedActions, '<-- updatedActions')
+		console.log(updatedActions, '<-- updatedActions')
+		this.props.fetchingAction(updatedActions)
+	}
 
-	 	this.props.fetchingAction(updatedActions)
+	submitAddActions = (e) => {
+		e.preventDefault();
+		console.log( this.state.addAction, '<-- new actions')
+		
+		const newAction = database.ref('actions').push({
+			action: this.state.addAction
+		})
+		console.log(newAction.key, '<-- newAction')
+		this.setState({
+			actionKey: newAction.key
+		}, () => {
+			console.log(this.state, '<-- this is the full state')
+		})
+		console.log(this.state)
+		this.setState({
+			addAction: '',
 
-}
+		})
+	}
+	
+	handleChange = (e) => {
+		this.setState({
+			addAction: e.target.value
+		}, () => {
+			 	console.log(this.state.addAction, 'added action in state')
+
+		})
+	}
+	actionAdd = (e) => {
+		e.preventDefault();
+		this.setState({
+			actionAdd: !this.state.actionAdd
+		})
+	}
+	triggerEditForm = (e) => {
+		e.preventDefault()
+		this.setState({
+			canEditAction: false
+		})
+	}
+	handleEdit = (e) => {
+		this.setState({
+			editedAction: e.target.value
+		})
+	}
+	submitEditAction = (e) => {
+		e.preventDefault();
+		console.log( this.state.editedAction, '<-- edited action in db')
+		database.ref('actions/' + this.state.actionKey).update({
+			action: this.state.editedAction
+		})
+		console.log(this.state)
+		this.setState({
+			editedAction: '',
+			addAction: ''
+		})
+	}
+
+
+
 
 	render(){
-		return(
-			<div>
-			</div>
 
+		return(
+			<div className="addAndEditButtons">
+			{this.state.actionAdd ?
+				<button className="addAction" onClick={this.actionAdd}>Add Action</button>
+				      :
+				<form onSubmit={this.submitAddActions} id="addActions">
+				    <input type="text" placeholder="Add Action" name="addAction" onChange={this.handleChange} value={this.state.addAction}/>
+				    <button className="addAction" type="submit">Add Action</button>
+				</form>
+			}
+			
+				{this.state.canEditAction ?
+					<button className="addAction" onClick={this.triggerEditForm}>Edit Action</button>
+					:
+					<form onSubmit={this.submitEditAction}>
+					<input type="text" onChange={this.handleEdit} placeholder="Edit Action" value={this.state.editedAction} />
+					<button type="submit" className="addAction">Submit</button>
+					</form>
+				}
+			
+			</div>
 			)
 	}
 }
+
+
 
 export default Actions;
