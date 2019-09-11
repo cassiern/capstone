@@ -8,10 +8,35 @@
 
 .header {
   display: flex;
-  font-size: 10px;
+  font-size: 18px;
+  width: 60%;
+  margin-left: 20%;
   flex-wrap: wrap;
   justify-content: center;
 }
+.content {
+  background-color: black;
+  width: 40%;
+/*  height: 35vh;
+*/  margin-left: 28%;
+  color: white;
+  border-radius: 10px 10px 0px 0px;
+  opacity: .8;
+  padding: 10px 0px;
+  padding: 30px;
+}
+.extra.content {
+  background-color: black;
+  width: 40%;
+  height: 10vh;
+  margin-left: 28%;
+  color: white;
+  border-radius: 0px 0px 10px 10px;
+  opacity: .7;
+  padding: 10px;
+}
+
+
 .nav-text{
   padding: 5px;
   color: black;
@@ -27,9 +52,15 @@
 }
 .logoName {
   float: left;
-  font-size: 15px;
-  margin-left: 10px;
+  font-size:18px;
+  font-weight: bold;
+  margin: 10px;
+  position: absolute;
 }
+.logoName:hover {
+  color: #a5a5a5;
+}
+
 a {
   padding: 10px;
   border-spacing: 10px;
@@ -75,42 +106,98 @@ strong {
   border-color: black;
 }
 .accept {
-  background-color: #003d18;
+  background-color: #006327;
   border-spacing: 10px;
-  font-size: 8px;
+  font-size: 12px;
   margin: 12px 2px;
   border-radius: 2px;
   color: white;
-  border-color: #003d18;
+  border-color: #003d18;  
+}
+.accept:hover {
+  background-color: #00471c;
 }
 
 .decline {
-  background-color: #520000;
+  background-color: #832626;
   border-spacing: 10px;
-  font-size: 8px;
+  font-size: 12px;
   margin: 12px 2px;
   border-radius: 2px;
   border-color: #520000;
   color: white;
 }
+.decline:hover {
+background-color: #520000
+}
 .quotes {
   background-color: #998e8a;
   border-spacing: 10px;
-  font-size: 8px;
+  font-size: 12px;
   margin: 12px 2px;
   border-radius: 2px;
   border-color: #998e8a;
   color: white;
+}
+.quotes:hover {
+  background-color: #7c7370;
 }
 .addAction {
-  background-color: #998e8a;
+  background-color: rgba(255, 255, 255, .2);
   border-spacing: 10px;
   font-size: 8px;
-  margin: 12px 2px;
+  margin: 10px 2px;
+  border-radius: 2px;
+  border-color: rgba(255, 255, 255, .1);
+  color: #dbdbdb;
+  font-weight: bold;
+/*  font-family: 'Gayathri', sans-serif;
+*/
+}
+.addAction:hover {
+  background-color: rgba(153, 142, 138, .6);
+  border-spacing: 10px;
+  font-size: 8px;
+  margin: 10px 2px;
   border-radius: 2px;
   border-color: #998e8a;
   color: white;
+/*  font-family: 'Gayathri', sans-serif;
+*/}
+h6 {
+  font-size: 16px;
+  font-weight: bold;
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 12%;
+  font-family: 'Gayathri', sans-serif;
+  background: -webkit-linear-gradient(#bfbfbf, #666666);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+.loginOnFirst {
+  margin-left: 50%;
+  color: white;
+  font-size: 18px;
+  padding: .5%;
+}
+.loginOnFirst:hover {
+  color: #a5a5a5;
+}
+.openingPara {
+  font-size: 25px;
+  width: 50%;
+  margin-left: 25%;
+  font-family: 'Gayathri', sans-serif;
+}
+.acountPara {
+  color: white;
+}
+.addAndEditButtons {
+  margin-right: 5%;
+}
+
+
 
 
 
@@ -122,15 +209,19 @@ strong {
 
 .App {
   text-align: center;
-  background-color: #f0e8e5;
+  background: linear-gradient(180deg, rgba(87,87,87,0.8981967787114846) 16%, rgba(55,55,55,0.823406862745098) 100%), url('https://source.unsplash.com/random?blur=4');
   height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Gayathri', sans-serif;
+
 }
 
-.App-logo {
+/*.App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
   pointer-events: none;
-}
+}*/
 
 .App-header {
   background-color: #282c34;

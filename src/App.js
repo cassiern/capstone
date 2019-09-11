@@ -80,7 +80,7 @@ render(){
     		
 			    {this.state.user ?
 			    	<div className="navBar">
-			    	<NavBar logout={this.logout} image={this.state.user.photoURL} deleteUser={this.deleteUser}/>		    	
+			    	<NavBar logout={this.logout} image={this.state.user.photoURL} deleteUser={this.deleteUser} user={this.state.user}/>		    	
 			    	</div>
 			    	:
 			    	<NavBar login={this.login}/>		    
@@ -96,8 +96,7 @@ render(){
     	</div>
     	:
     	<div className="wrapper">
-    		<p>You must be logged in to access the App. Sign in with your Google account!</p>
-
+    		<p className="openingPara">You must be logged in to access the App. Sign in with your<br/> <span className="acountPara">Google account</span></p>
     	</div>
     }
 	</div>

@@ -54,15 +54,10 @@ nextQuote =(e) => {
 	render(){
 		console.log(this.props.parentAccepts, 'parent accepts in home')
 		return(
-			<div>
-			
-			<div class="">
-			  <div class="">
+			<div>			
+
 			    <div class="content">
-			    
-			      <img src="https://source.unsplash.com/random" class="ui mini"/>
-			      <div className="header"><p>{this.props.actionOTDay}</p></div>
-			      <div class="meta"></div>
+			    	<div className="header"><p>{this.props.actionOTDay}</p></div>
 			      <div class="description">
 			        <h6>{this.props.quoteOTDay}</h6>
 			      </div>
@@ -70,20 +65,17 @@ nextQuote =(e) => {
 			    </div>
 
 			    {this.state.isCompleted ?
-			    	<div>
-			    		<button onClick={this.isCompleted}>Complete</button>
+			    	<div className="extra content">
+			    		<button onClick={this.isCompleted} className="quotes">Complete</button>
 			    	</div>
 			    	:
-			    <div class="extra content">
-			      <div class="ui two buttons">
+			    <div className="extra content">
 			        <button class="ui button" className="accept" onClick={this.updateAccepts}>Accept</button>
 			        <button className="decline" onClick={this.untoNext}>Decline</button>
 			        <button className="quotes" onClick={this.nextQuote}>Quotes</button>
-			      </div>
 			    </div>
 			    }
-			  </div>
-			  </div>
+
 			  </div>
 			)
 		}

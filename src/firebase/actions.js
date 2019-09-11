@@ -87,7 +87,7 @@ class Actions extends Component{
 			},
 			action18: {
 				id: 18,
-				action: 'Set a timer for 5 minutes to not think about your day. Think about things your grateful for, your family, anything other than what needs to be done today.'
+				action: 'Set a timer for 5 minutes to not think about your day. Think about things your grateful for, or anything other than what needs to be done today.'
 			},
 			action19: {
 				id: 19,
@@ -199,6 +199,11 @@ class Actions extends Component{
 		}, () => {
 			console.log(this.state, '<-- this is the full state')
 		})
+		console.log(this.state)
+		this.setState({
+			addAction: '',
+
+		})
 	}
 	
 	handleChange = (e) => {
@@ -232,6 +237,11 @@ class Actions extends Component{
 		database.ref('actions/' + this.state.actionKey).update({
 			action: this.state.editedAction
 		})
+		console.log(this.state)
+		this.setState({
+			editedAction: '',
+			addAction: ''
+		})
 	}
 
 
@@ -240,12 +250,12 @@ class Actions extends Component{
 	render(){
 
 		return(
-			<div>
+			<div className="addAndEditButtons">
 			{this.state.actionAdd ?
 				<button className="addAction" onClick={this.actionAdd}>Add Action</button>
 				      :
 				<form onSubmit={this.submitAddActions} id="addActions">
-				    <input type="text" placeholder="Add an action" name="addAction" onChange={this.handleChange}/>
+				    <input type="text" placeholder="Add Action" name="addAction" onChange={this.handleChange} value={this.state.addAction}/>
 				    <button className="addAction" type="submit">Add Action</button>
 				</form>
 			}
@@ -254,7 +264,7 @@ class Actions extends Component{
 					<button className="addAction" onClick={this.triggerEditForm}>Edit Action</button>
 					:
 					<form onSubmit={this.submitEditAction}>
-					<input type="text" onChange={this.handleEdit} value={this.state.editedAction} />
+					<input type="text" onChange={this.handleEdit} placeholder="Edit Action" value={this.state.editedAction} />
 					<button type="submit" className="addAction">Submit</button>
 					</form>
 				}

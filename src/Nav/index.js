@@ -57,63 +57,30 @@ render(){
   
   return(
   	<div className="navBar">
-  	<h1 className="logoName">M = M</h1>
-    <div class="ui inverted segment">
+    {this.props.user ?
       <div class="ui inverted pointing secondary menu">
-        <a class="active item" onClick={this.loggingOut}>Logout</a>
+        <a class="item" onClick={this.loggingOut}>Logout</a>
         <a class="item" onClick={this.loggingIn}>Login</a>
         <a class="item" onClick={this.deletingUser}>Delete Account</a>
+        <a class="item" href="/home"><img src={this.props.image} class="ProfileImg"/></a>
       </div>
-              <img src={this.props.image} className="ProfileImg"/>
-    </div>
+      :
+      <div class="ui inverted pointing secondary menu">
+          <h1 className="logoName">M = M
+          <h6>Motivation = Movement</h6>
+          </h1>
+
+          <a class="item" className="loginOnFirst" onClick={this.loggingIn}>Login</a>
+      </div>
+    }
 
 
-      <Segment inverted>
-        <Menu inverted pointing secondary>
-          <Menu.Item
-            name='home'
-            active={activeItem === 'home'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name='messages'
-            active={activeItem === 'messages'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name='friends'
-            active={activeItem === 'friends'}
-            onClick={this.handleItemClick}
-          />
-        </Menu>
-      </Segment>
   </div>
     )
   }
 }
 export default NavBar;
 
-
-//    <button className="logout" onClick={this.toggle}>M = M</button>
-
-  // <div className="modal">
-  //   <Form inline onSubmit={(e) => e.preventDefault()}>
-  //        <Button color="danger" onClick={this.toggle}>Open</Button>
-  //           </Form>
-  //         <Modal returnFocusAfterClose={this.state.focusAfterClose} isOpen={this.state.open}>
-  //       <ModalBody>
-  //       <p>Welcome to <strong>Motivation = Movement</strong>
-  //     <br/>Every day you'll have motivational quotes<br/> 
-  //         to help you stay positive and ready to conquer the day! There will be an 'action' of the day for you as well! This might be something silly to get you thinking like a kid again,<br/>
-  //          or something that could become a habit!<br /> These tasks have came from successful poeple from all walks of life.<br/>
-  //          I, for one, think anyone is capable of success if they put their mind to it!<br/> </p>
-            
-  //       </ModalBody>
-  //       <ModalFooter>
-  //           <Button className="close" onClick={this.toggle}>Close</Button>
-  //       </ModalFooter>
-  //   </Modal>
-  //    </div>
 
 
 
