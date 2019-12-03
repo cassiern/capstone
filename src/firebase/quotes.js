@@ -124,11 +124,11 @@ class Quotes extends Component{
 			},
 			quote29: {
 				id: 29,
-				quote: 'We do not have tto all of it alone. We were never meant to. -Brene Brown'
+				quote: 'We do not have to do all of it alone. We were never meant to. -Brene Brown'
 			},
 			quote30: {
 				id: 30,
-				quote: 'Shame corrodes the very partr of us that believes we are capable of change. -Brene Brown'
+				quote: 'Shame corrodes the very part of us that believes we are capable of change. -Brene Brown'
 			}
 
 		})

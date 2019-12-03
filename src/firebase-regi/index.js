@@ -34,7 +34,7 @@ login() {
 }
 
 
-//admin privalege
+//admin privilege
 // provider.addScope("https://www.googleapis.com/auth/admin.datatransfer");
 
 //sign out logic

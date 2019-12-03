@@ -6,7 +6,7 @@ import '../App.css';
 // import NavBar from '../Nav';
 
 
-//where the quotes and actions are render
+//where the quotes and actions are rendered
 class Home extends Component{
 	constructor(props){
 		super(props);

@@ -82,20 +82,6 @@ export default Profile;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// deleteUser = (e) => {
 // 	const user = database.auth().currentUser;
 // 	user.delete().then(function() {
 // 		console.log('User deleted.')
